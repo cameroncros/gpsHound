@@ -15,7 +15,7 @@ GPS::GPS() {
 	gps_rec = new gpsmm("localhost", DEFAULT_GPSD_PORT);
 
 	if (gps_rec->stream(WATCH_ENABLE|WATCH_JSON) == NULL) {
-		std::cerr << "No GPSD running.\n";
+		std::cerr  << "(" << __FILE__ << ":" << __LINE__ << ") " << "No GPSD running.\n";
 	}
 }
 
