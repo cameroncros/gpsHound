@@ -7,12 +7,13 @@
 
 #include "Main.h"
 #include "GPS.h"
+#include "Sqlite.h"
 #include <iostream>
 #include <math.h>
 
 Main::Main() {
 	const gps_data_t *dt;
-	data datastr;
+	Sqlite::data datastr;
 	gpsd = new GPS();
 	db = new Sqlite();
 	while (true) {

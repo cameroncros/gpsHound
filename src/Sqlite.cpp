@@ -84,7 +84,7 @@ void Sqlite::insertData(data* dt) {
 	sqlite3_reset(insert);
 }
 
-data *Sqlite::getData(int index) {
+Sqlite::data *Sqlite::getData(int index) {
 	int out;
 	data *dtr = NULL;
 	sqlite3_bind_int (query, 1, index);

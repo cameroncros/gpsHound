@@ -15,20 +15,20 @@ class Share;
 #include "sqlite3.h"
 #include <cstdlib>
 
-typedef struct data {
-	double time;
-	double altitude;
-	double latitude;
-	double longitude;
-	double heading;
-};
-
 class Sqlite {
 private:
 	sqlite3 *dbHandle;
 	sqlite3_stmt *insert;
 	sqlite3_stmt *query;
 public:
+	typedef struct data {
+		double time;
+		double altitude;
+		double latitude;
+		double longitude;
+		double heading;
+	} data;
+
 	Sqlite();
 	virtual ~Sqlite();
 
