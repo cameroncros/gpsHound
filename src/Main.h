@@ -9,10 +9,12 @@
 #define MAIN_H_
 
 #include "GPS.h"
+#include "Sqlite.h"
 
 class Main {
 private:
 	class GPS *gpsd;
+	class Sqlite *db;
 public:
 	Main();
 	virtual ~Main();
