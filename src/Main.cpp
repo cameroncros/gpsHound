@@ -8,35 +8,26 @@
 #include "Main.h"
 #include "GPS.h"
 #include "Sqlite.h"
+#include "Data.h"
 #include <iostream>
-#include <math.h>
+
 
 Main::Main() {
-	const gps_data_t *dt;
-	Sqlite::data datastr;
+	Data *datum;
 	gpsd = new GPS();
 	db = new Sqlite();
-	while (true) {
-		dt=gpsd->getGpsdata();
-		if (isnan(dt->fix.altitude) ||
-				isnan(dt->attitude.heading) ||
-				isnan(dt->fix.latitude) ||
-				isnan(dt->fix.longitude) ||
-				isnan(dt->fix.time)) {
+	std::cout << "Wait for lock";
+	for (;;) {
+		datum = new Data(gpsd->getGpsdata(), 0);
+		if (!datum->isLocked()) {
+			std::cout << ".";
 			continue;
 		}
-		std::cout << dt->attitude.heading
-				<< ":" << dt->fix.altitude
-				<< ":" << dt->fix.latitude
-				<< ":" << dt->fix.longitude
-				<< ":" << dt->fix.time
-				<< std::endl;
-		datastr.heading = dt->attitude.heading;
-		datastr.altitude = dt->fix.altitude;
-		datastr.latitude = dt->fix.latitude;
-		datastr.longitude = dt->fix.longitude;
-		datastr.time = dt->fix.time;
-		db->insertData(&datastr);
+		datum->print();
+		db->insertData(datum);
+		delete(datum);
+		datum=NULL;
+
 	}
 	// TODO Auto-generated constructor stub
 
@@ -46,6 +37,7 @@ Main::~Main() {
 	delete(gpsd);
 	delete(db);
 	gpsd=NULL;
+	db=NULL;
 	// TODO Auto-generated destructor stub
 }
 

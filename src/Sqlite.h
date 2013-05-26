@@ -8,6 +8,7 @@
 #ifndef SQLITE_H_
 #define SQLITE_H_
 
+#include "Data.h"
 
 
 class Share;
@@ -21,19 +22,11 @@ private:
 	sqlite3_stmt *insert;
 	sqlite3_stmt *query;
 public:
-	typedef struct data {
-		double time;
-		double altitude;
-		double latitude;
-		double longitude;
-		double heading;
-	} data;
-
 	Sqlite();
 	virtual ~Sqlite();
 
-	void insertData(data *dt);
-	data *getData(int index);
+	void insertData(Data *dt);
+	Data *getData(int index);
 
 	void initialiseDatabase();
 };
